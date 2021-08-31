@@ -1,0 +1,6 @@
+gifFile.txt
+Monday; Friday
+13; 15
+gifFile2.txt
+Tuesday; Wednesday
+2; 10
