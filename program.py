@@ -1,17 +1,26 @@
 import pyglet
+from time import sleep
+from multiprocessing import Process
 
-ag_file = "dinosaur-07.gif"
-animation = pyglet.resource.animation(ag_file)
-sprite = pyglet.sprite.Sprite(animation)
+sprite = pyglet.sprite.Sprite(pyglet.resource.animation('download.gif'))
+window = pyglet.window.Window(fullscreen=True, visible=True)
+#pyglet.gl.glClearColor(1, 1, 1, 1)
 
-win = pyglet.window.Window(width=sprite.width, height=sprite.height)
-
-green = 0, 1, 0, 1
-pyglet.gl.glClearColor(*green)
-
-@win.event
+@window.event
 def on_draw():
-    win.clear()
+    window.clear()
     sprite.draw()
 
-pyglet.app.run()
+def appRun(name): #umdrehen: Fenster läuft normal. 2.Prozess wartet auf nächstes Bild und ändert Variable zu Bild-Pfad
+    #while... sleep
+    pyglet.app.run()
+    print('Run app')
+
+p = Process(target=appRun, args=('bob',))
+
+if __name__ == '__main__':
+    p.start()
+    #p.join()
+    sleep(3)
+    print('Started Window')
+print("2")
