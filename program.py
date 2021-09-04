@@ -2,25 +2,41 @@ import pyglet
 from time import sleep
 from multiprocessing import Process
 
-sprite = pyglet.sprite.Sprite(pyglet.resource.animation('download.gif'))
+sprite1 = pyglet.sprite.Sprite(pyglet.resource.image("bsp.png"))
+sprite2 = pyglet.sprite.Sprite(pyglet.resource.image('bsp.png'))
 window = pyglet.window.Window(fullscreen=True, visible=True)
-#pyglet.gl.glClearColor(1, 1, 1, 1)
+showing = 1
 
 @window.event
 def on_draw():
     window.clear()
-    sprite.draw()
+    if showing == 1:
+        print("showing == 1")
+        sprite1.draw()
+    else:
+        print("showing == 2")
+        sprite2.draw()
 
-def appRun(name): #umdrehen: Fenster läuft normal. 2.Prozess wartet auf nächstes Bild und ändert Variable zu Bild-Pfad
-    #while... sleep
+def appRun(name): 
     pyglet.app.run()
     print('Run app')
 
-p = Process(target=appRun, args=('bob',))
+def loadGif(num):
+    global sprite1
+    global sprite2
+    if num == 1:
+        print("loadGif(1)")
+        sprite1 = pyglet.sprite.Sprite(pyglet.resource.animation('download.gif'))
+    elif num == 2:
+        print("loadGif(2)")
+        sprite1 = pyglet.sprite.Sprite(pyglet.resource.animation('download.gif'))
+    else:
+        print('Sprite not avaible!! Critical Error')
+
+windowProcess = Process(target=appRun, args=('bob',))
 
 if __name__ == '__main__':
-    p.start()
-    #p.join()
+    loadGif(1)
+    windowProcess.start()
     sleep(3)
-    print('Started Window')
-print("2")
+    loadGif(2)
